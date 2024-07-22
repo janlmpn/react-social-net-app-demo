@@ -3,24 +3,13 @@ const { ApolloServer } = require('apollo-server-express');
 const { createServer } = require('http');
 const cors = require('cors');
 const { gql } = require('apollo-server-express');
+const { testTypeDefs, testResolvers } = require('../src/graphql/resolvers/test/test.js');
 
 const isDev = process.env.MIDDLEWARE_ENV === 'dev';
 
-const typeDefs = gql`
-type Query {
-    hello: String
-}
-`;
-
-const resolvers = {
-    Query: {
-        hello: () => 'Hello world!',
-    },
-};
-
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  typeDefs: [testTypeDefs],
+  resolvers: [testResolvers],
   introspection: isDev,
   playground: isDev
 });
